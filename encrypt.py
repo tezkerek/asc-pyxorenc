@@ -1,26 +1,24 @@
 import argparse
 
+CHUNK_SIZE_LIMIT = 4096
+
 parser = argparse.ArgumentParser(description="Encrypt a file using XOR")
-parser.add_argument("password", type=str, action="store", help="the encryption key")
-parser.add_argument("input_file", type=str, action="store", help="the input file")
-parser.add_argument(
-    "output_file",
-    type=str,
-    action="store",
-    help="the file that will contain the encrypted output",
-)
+parser.add_argument("password", help="the encryption key")
+parser.add_argument("input_file", help="the file to encrypt")
+parser.add_argument("output_file", help="the encrypted output file")
 
 args = parser.parse_args()
 
-key_len = len(args.password)
-chunk_size = 1024 // key_len * key_len
-repeated_key = chunk_size // key_len * args.password
-byte_key = bytes(repeated_key, "utf-8")
+key = bytes(args.password, "utf-8")
+key_len = len(key)
 
-with open(args.input_file, "rb") as infile, open(args.output_file, "wb") as outfile:
-    in_bytes = infile.read(chunk_size)
-    while in_bytes:
-        enc_bytes = bytes([b ^ k for b, k in zip(in_bytes, byte_key)])
-        outfile.write(enc_bytes)
+# Chunk size will be a multiple of the key length
+chunk_size = CHUNK_SIZE_LIMIT // key_len * key_len
 
-        in_bytes = infile.read(chunk_size)
+with open(args.input_file, "rb") as in_file, open(args.output_file, "wb") as out_file:
+    enc_bytes = in_file.read(chunk_size)
+    while enc_bytes:
+        dec_bytes = bytes(b ^ key[i % key_len] for (i, b) in enumerate(enc_bytes))
+        out_file.write(dec_bytes)
+
+        enc_bytes = in_file.read(chunk_size)
