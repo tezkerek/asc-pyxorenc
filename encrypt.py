@@ -16,9 +16,9 @@ key_len = len(key)
 chunk_size = CHUNK_SIZE_LIMIT // key_len * key_len
 
 with open(args.input_file, "rb") as in_file, open(args.output_file, "wb") as out_file:
-    enc_bytes = in_file.read(chunk_size)
-    while enc_bytes:
-        dec_bytes = bytes(b ^ key[i % key_len] for (i, b) in enumerate(enc_bytes))
-        out_file.write(dec_bytes)
+    input_bytes = in_file.read(chunk_size)
+    while input_bytes:
+        enc_bytes = bytes(b ^ key[i % key_len] for (i, b) in enumerate(input_bytes))
+        out_file.write(enc_bytes)
 
-        enc_bytes = in_file.read(chunk_size)
+        input_bytes = in_file.read(chunk_size)
