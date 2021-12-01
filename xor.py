@@ -1,11 +1,13 @@
+#!/usr/bin/python
+
 import argparse
 
 CHUNK_SIZE_LIMIT = 4096
 
-parser = argparse.ArgumentParser(description="Encrypt a file using XOR")
-parser.add_argument("password", help="the encryption key")
-parser.add_argument("input_file", help="the file to encrypt")
-parser.add_argument("output_file", help="the encrypted output file")
+parser = argparse.ArgumentParser(description="Encrypt/decrypt a file using XOR")
+parser.add_argument("password", help="the encryption/decryption key")
+parser.add_argument("input_file", help="the file to encrypt/decrypt")
+parser.add_argument("output_file", help="the encrypted/decrypted output file")
 
 args = parser.parse_args()
 
