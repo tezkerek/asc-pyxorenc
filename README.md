@@ -1,5 +1,7 @@
 # Python XOR encryption tool
 
+Usage: `python xor.py <password> <input_file> <output_file>`
+
 Run `python xor.py -h` for help.
 
 ## Example
