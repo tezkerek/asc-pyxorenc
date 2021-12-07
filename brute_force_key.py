@@ -2,6 +2,7 @@
 
 import argparse
 import string
+import itertools
 
 VALID_KEY_CHARS = string.ascii_letters + string.digits
 VALID_DECRYPTION_CHARS = (
@@ -18,10 +19,13 @@ with open(args.input_file, "rb") as input_file:
     enc_len = len(enc_bytes)
 
     for key_len in range(10, 16):
-        key = []
+        is_valid_length = True
+        key_bytes = []
 
         for key_idx in range(0, key_len):
-            # Try every valid character
+            key_chars_at_idx = []
+
+            # Find every valid key character for index key_idx
             for key_byte in VALID_KEY_CHARS:
                 # XOR key_byte with every key_len byte in enc_bytes and verify
                 # that the result is valid
@@ -32,7 +36,14 @@ with open(args.input_file, "rb") as input_file:
                     if dec_byte not in VALID_DECRYPTION_CHARS:
                         break
                 else:
-                    key.append(key_byte)
-                    break
-        if key:
-            print("Possible key", "".join(key), "of length", key_len)
+                    key_chars_at_idx.append(key_byte)
+
+            if key_chars_at_idx:
+                key_bytes.append(key_chars_at_idx)
+            else:
+                # There are no valid keys with length key_len
+                break
+
+        if key_bytes:
+            for key in itertools.product(*key_bytes):
+                print(f"Possible key of length {key_len}:", "".join(key))

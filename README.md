@@ -39,7 +39,8 @@ The script `find_key_from_input.py` can be used to XOR the input and output and 
 
 #### Knowing only the output
 We know that the key is short (10-15) and that it contains only alphanumeric
-characters. The script `crack.py` can find the key by brute force in reasonable time.
+characters. The script `brute_force_key.py` can find the key by brute force in
+reasonable time.
 
 For every possible key length `l = 10..16`, initialize an empty byte array `K`.
 For every position `i = 0..l` in the key, choose a valid key char `c` and XOR
