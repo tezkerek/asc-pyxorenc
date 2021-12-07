@@ -2,7 +2,7 @@
 
 import argparse
 
-parser = argparse.ArgumentParser(description="XOR two files to find the key")
+parser = argparse.ArgumentParser(description="XOR input and output to find the key")
 parser.add_argument("file1")
 parser.add_argument("file2")
 
@@ -19,4 +19,4 @@ with open(args.file1, "rb") as file1, open(args.file2, "rb") as file2:
             break
     else:
         # Otherwise just print the first 30 bytes
-        print("First 30 bytes of key:", repeated_key)
+        print("First 30 bytes of key:", repeated_key.decode("utf-8"))

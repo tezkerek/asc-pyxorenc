@@ -35,7 +35,7 @@ repeated key:
 
     input.txt XOR output = input.txt XOR (input.txt XOR repeated_key) = repeated_key = z7SaQjVrY4RpigOz7SaQjVrY4RpigOz7SaQjVrY4RpigOz7SaQjVrY4RpigOz7Sa...
 
-The script `xor_files.py` can be used to XOR the input and output and find the key.
+The script `find_key_from_input.py` can be used to XOR the input and output and find the key.
 
 #### Knowing only the output
 We know that the key is short (10-15) and that it contains only alphanumeric
